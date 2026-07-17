@@ -1,17 +1,26 @@
 ---
-
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+	<main>
+		<html lang="en">
+			<head>
+				<meta charset="utf-8" />
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+				<link rel="icon" href="/favicon.ico" />
+				<meta name="viewport" content="width=device-width" />
+				<meta name="generator" content={Astro.generator} />
+				<title>Splattanooga</title>
+			</head>
+			<body>
+				<center>
+					<h1>Splattanooga</h1>
+					Gaussian Splatting for Chattanooga<br>
+					Website in the works<br>
+					rob at splattanooga dot com for more information
+				</center>
+			</body>
+		</html>
+	</main>
+</Layout>

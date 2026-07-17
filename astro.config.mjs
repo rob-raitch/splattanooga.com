@@ -1,5 +1,17 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  // Move "fonts" completely out of the experimental block!
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: 'Flavors',
+      cssVariable: '--font-flavors',
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Quicksand',
+      cssVariable: '--font-quicksand', // Create a separate variable for your body text
+    }
+  ]
+});

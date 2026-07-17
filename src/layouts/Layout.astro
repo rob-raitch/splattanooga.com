@@ -1,0 +1,29 @@
+---
+// src/layouts/Layout.astro
+import { Font } from 'astro:assets';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <Font cssVariable="--font-flavors" preload />
+    <Font cssVariable="--font-quicksand" family="Quicksand" src="/fonts/Quicksand.woff2" preload />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* 1. Apply the clean, legible font to all regular text */
+  body, p, li, span, a {
+    font-family: var(--font-quicksand), sans-serif;
+    line-height: 1.6; /* Giving paragraphs a bit of breathing room helps readability immensely */
+  }
+
+  /* 2. Keep the fun font restricted safely to headings only */
+  h1, h2, h3, .fancy-heading {
+    font-family: var(--font-flavors), cursive;
+  }
+</style>
