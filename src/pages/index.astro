@@ -248,6 +248,19 @@
       color: var(--text-muted);
       font-size: 0.9rem;
     }
+
+	/* Survey Results Section */
+	nav a[href="/results"] {
+		color: var(--text-muted);
+		text-decoration: none;
+		font-size: 0.95rem;
+		font-weight: 600;
+		transition: color 0.2s ease;
+	}
+
+	nav a[href="/results"]:hover {
+		color: var(--accent);
+	}
   </style>
 </head>
 <body>
@@ -257,6 +270,9 @@
       <a href="/" class="brand-logo">splattanooga</a>
       <nav>
         <a href="#about">About</a>
+		<a href="https://docs.google.com/document/d/1-yyPhzGzEANCGawf3Xnuo8DRulZXuLspHy5z_WBzTdY/edit?usp=drive_link" 
+		  target="_blank" 
+		  rel="noopener noreferrer">Survey Report ↗</a>
         <a href="mailto:rob@splattanooga.com">Contact</a>
       </nav>
     </div>
