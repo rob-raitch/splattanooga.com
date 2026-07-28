@@ -1,26 +1,319 @@
----
-// src/pages/index.astro
-import Layout from '../layouts/Layout.astro';
----
-<Layout>
-	<main>
-		<html lang="en">
-			<head>
-				<meta charset="utf-8" />
-				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-				<link rel="icon" href="/favicon.ico" />
-				<meta name="viewport" content="width=device-width" />
-				<meta name="generator" content={Astro.generator} />
-				<title>Splattanooga</title>
-			</head>
-			<body>
-				<center>
-					<h1>SPL@TTÄNOOGA</h1>
-					Gaussian Splatting for Chattanooga<br>
-					Website in the works<br>
-					rob at splattanooga dot com for more information
-				</center>
-			</body>
-		</html>
-	</main>
-</Layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Splattanooga | Spatial Arts | Gaussian Splatting for Chattanooga</title>
+  
+  <!-- Flavors for the brand logo + Inter for UI/Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Flavors&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0c10;
+      --card-bg: #12161f;
+      --card-hover: #171d29;
+      --accent: #00e5ff;
+      --accent-purple: #7000ff;
+      --text-main: #f0f4f8;
+      --text-muted: #8a99ad;
+      --border: #1e2633;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Logo typography using Flavors */
+    .brand-logo {
+      font-family: 'Flavors', cursive, sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      line-height: 1.2;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 12, 16, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1.5rem 2rem;
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 680px;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: var(--accent);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.85rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 229, 255, 0.25);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--text-muted);
+    }
+
+    /* About Section */
+    .about-section {
+      padding: 6rem 1.5rem;
+      border-top: 1px solid var(--border);
+      background: radial-gradient(circle at 50% 0%, rgba(112, 0, 255, 0.05) 0%, transparent 70%);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.25rem 2rem;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1.25rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">splattanooga</a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="mailto:rob@splattanooga.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <span class="badge">Community Arts Consulting</span>
+      <h1 class="hero-title">Reality Capture for the Scenic City</h1>
+      <p class="hero-subtitle">
+        Exploring Gaussian Splatting, 3D scanning, and digital twin workflows across local arts, historical preservation, and creative pipelines in the Greater Chattanooga area.<br>
+		Get hands-on with in-depth training, workshops, and collaborative projects that bridge technology and creativity.
+      </p>
+      
+      <div class="cta-group">
+        <a href="mailto:rob@splattanooga.com" class="btn btn-primary">Get Involved</a>
+        <a href="#about" class="btn btn-secondary">Learn More</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Pioneering Spatial Technology in Chattanooga</h2>
+          <p>
+            Splattanooga bridges advanced 3D capture methods with real-world creative application, making volumetric capture accessible for local projects and digital artists.<br>
+			Our mission is to empower the community with tools, knowledge, and collaborative opportunities to explore the intersection of technology, art, and spatial storytelling.
+          </p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <span class="card-icon">✨</span>
+            <h3>Q. What?<br>A. Gaussian Splat Training</h3>
+            <p>
+              Introduction courses and workshops on Gaussian Splatting, a cutting-edge technique for rendering complex 3D scenes with high efficiency and visual fidelity.<br>
+			  Let's talk and tailor this to your needs.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="card-icon">🎨</span>
+            <h3>Q. Who?<br>A. Community & Arts Organizations, Artists, Creatives of all types</h3>
+            <p>
+              Empowering local creative teams, galleries, museums, and digital artists with modern 3D pipelines, workshops, and empowerment to start generating and owning their spatial content.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Splattanooga. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
