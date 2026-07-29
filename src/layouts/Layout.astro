@@ -5,13 +5,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     
-    <!-- Google Fonts for Flavors and Quicksand -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Flavors&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Preload fonts from same origin to prevent layout shift in Safari -->
+    <link rel="preload" href="/fonts/Flavors.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/Quicksand.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
   </head>
   <body>
     <slot />
@@ -19,15 +18,33 @@
 </html>
 
 <style is:global>
-  /* 1. Body & Paragraph typography */
+  /* 1. Define Local Flavors Font */
+  @font-face {
+    font-family: 'Flavors';
+    src: url('/fonts/Flavors.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* 2. Define Local Quicksand Font */
+  @font-face {
+    font-family: 'Quicksand';
+    src: url('/fonts/Quicksand.woff2') format('woff2');
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* 3. Global Styles */
   body, p, li, span, a {
-    font-family: 'Quicksand', system-ui, sans-serif;
+    font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
   }
 
-  /* 2. Brand headings & Flavors logo */
+  /* Force Flavors on headers and logo */
   h1, h2, h3, .fancy-heading, .brand-logo {
-    font-family: 'Flavors', cursive, sans-serif;
-    font-weight: 400; /* Flavors only exists in weight 400 */
+    font-family: 'Flavors', cursive, sans-serif !important;
+    font-weight: 400 !important;
   }
 </style>
