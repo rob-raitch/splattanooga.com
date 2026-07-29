@@ -1,6 +1,7 @@
 import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
+  site: 'https://splattanooga.com',
   // Move "fonts" completely out of the experimental block!
   fonts: [
     {
