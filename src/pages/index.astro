@@ -1,263 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Splattanooga | Spatial Arts | Gaussian Splatting for Chattanooga</title>
-  
-  <style>
-    :root {
-      /* Editorial Palette: Warm Slate & High Contrast */
-	--bg-dark: #0f1115;
-	--bg-surface: #15181e;
-	--border: rgba(255, 255, 255, 0.12);
-	--border-strong: rgba(255, 255, 255, 0.25);
-	
-	--text-main: #f4f4f0;
-	--text-muted: #8a8f98;
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+---
 
-	--accent: hsl(25, 100%, 50%); /* Architectural Amber */
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-     	font-family: var(--font-body);
-		background-color: var(--bg-dark);
-		color: var(--text-main);
-		line-height: 1.6;
-		-webkit-font-smoothing: antialiased;
-    }
-
-    /* Logo typography using Flavors */
-    .brand-logo {
-      font-family: 'Flavors', cursive, sans-serif;
-      font-size: 2rem;
-      letter-spacing: 0.02em;
-      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-decoration: none;
-      line-height: 1.2;
-    }
-
-    .navbar {
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		background: rgba(15, 17, 21, 0.9);
-		backdrop-filter: blur(16px);
-		border-bottom: 1px solid var(--border);
-		padding: 1.25rem 2rem;
-    }
-
-    .nav-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    nav {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    nav a {
-	  font-family: var(--font-mono);
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: color 0.2s ease;
-    }
-
-    nav a:hover {
-      color: var(--accent);
-    }
-
-    /* Hero Section */
-    .hero {
-      min-height: 75vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 4rem 1.5rem 2rem;
-      position: relative;
-    }
-
-    .hero-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.5rem, 6vw, 3rem);
-      line-height: 1.2;
-      margin-bottom: 1.25rem;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-      max-width: 680px;
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 0.35rem 1rem;
-      background: rgba(0, 229, 255, 0.08);
-      border: 1px solid var(--border);
-      color: var(--accent);
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .cta-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn {
-      padding: 0.85rem 1.75rem;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--border) 0%, var(--accent) 100%);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 229, 255, 0.25);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--text-muted);
-    }
-
-    /* About Section */
-    .about-section {
-      padding: 6rem 1.5rem;
-      border-top: 1px solid var(--border);
-      background: radial-gradient(circle at 50% 0%, rgba(112, 0, 255, 0.05) 0%, transparent 70%);
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 4rem;
-    }
-
-    .section-header h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      letter-spacing: -0.01em;
-    }
-
-    .section-header p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2.25rem 2rem;
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      background: var(--card-hover);
-      border-color: var(--accent);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-icon {
-      font-size: 2rem;
-      margin-bottom: 1.25rem;
-      display: inline-block;
-    }
-
-    .card h3 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: var(--text-main);
-    }
-
-    .card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 1.5rem;
-      border-top: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-  </style>
-</head>
-<body>
-
+<Layout>
   <header class="navbar">
     <div class="nav-container">
-      <a href="/" class="brand-logo" style="font-family: 'Flavors', cursive, sans-serif !important; font-weight: 400 !important; font-size: 2.25rem; text-decoration: none;">splattanooga</a>
+      <a href="/" class="brand-logo">splattanooga</a>
       <nav>
         <a href="#about">About</a>
-		<a href="https://docs.google.com/document/d/e/2PACX-1vQMXDCuW_JNd8BSX4dcvETfEPcR3Fz2oGRHp8ZmXq72x8PSdI2u78S0WWxOEfQyL0RskgGHXwRwUPC-/pub" 
-		  target="_blank" 
-		  rel="noopener noreferrer">Survey Report ↗</a>
+        <a href="https://docs.google.com/document/d/e/2PACX-1vQMXDCuW_JNd8BSX4dcvETfEPcR3Fz2oGRHp8ZmXq72x8PSdI2u78S0WWxOEfQyL0RskgGHXwRwUPC-/pub" 
+          target="_blank" 
+          rel="noopener noreferrer">Survey Report ↗</a>
         <a href="mailto:rob@splattanooga.com">Contact</a>
       </nav>
     </div>
@@ -270,7 +24,7 @@
       <h1 class="hero-title">Gaussian Splatting for Chattanooga</h1>
       <p class="hero-subtitle">
         Exploring Gaussian Splatting, Radiance Fields, 3D scanning, and digital twin workflows across local arts, historical preservation, and creative pipelines in the Greater Chattanooga area.<br>
-		Get hands-on with in-depth training, workshops, and collaborative projects that bridge technology and creativity.
+        Get hands-on with in-depth training, workshops, and collaborative projects that bridge technology and creativity.
       </p>
       
       <div class="cta-group">
@@ -286,7 +40,7 @@
           <h2>Bringing Splats to Chattanooga</h2>
           <p>
             Splattanooga bridges advanced 3D capture methods with real-world creative application, making volumetric capture accessible for local projects and creative professionals.<br>
-			<b>Our mission is to empower the community with tools, knowledge, and collaborative opportunities to explore the intersection of technology, art, and spatial storytelling.</b>
+            <b>Our mission is to empower the community with tools, knowledge, and collaborative opportunities to explore the intersection of technology, art, and spatial storytelling.</b>
           </p>
         </div>
 
@@ -296,7 +50,7 @@
             <h3>Q. What?<br>A. Gaussian Splat Training</h3>
             <p>
               Introductory courses and workshops on Gaussian Splatting, a cutting-edge technique for rendering complex 3D scenes with high efficiency and visual fidelity.<br>
-			  Let's talk and tailor this to your needs.
+              Let's talk and tailor this to your needs.
             </p>
           </div>
 
@@ -305,7 +59,7 @@
             <h3>Q. Who?<br>A. Community & Arts Organizations, Artists, Creatives of all types</h3>
             <p>
               Enabling local creative teams, galleries, museums, and digital artists with modern 3D pipelines, workshops, and empowerment to start generating and owning their spatial content.<br>
-			  Get in touch to learn more.
+              Get in touch to learn more.
             </p>
           </div>
         </div>
@@ -316,6 +70,198 @@
   <footer>
     <p>© 2026 Splattanooga. All rights reserved.</p>
   </footer>
+</Layout>
 
-</body>
-</html>
+<style>
+  /* All your page CSS remains here, but remove hardcoded font overrides */
+  :root {
+    --bg-dark: #0f1115;
+    --bg-surface: #15181e;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-strong: rgba(255, 255, 255, 0.25);
+    --text-main: #f4f4f0;
+    --text-muted: #8a8f98;
+    --accent: hsl(25, 100%, 50%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .brand-logo {
+    font-family: var(--font-flavors);
+    font-size: 2.25rem;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 17, 21, 0.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem;
+  }
+
+  .nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav { display: flex; gap: 2rem; align-items: center; }
+
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 1.5rem 2rem;
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 3rem);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-subtitle {
+    max-width: 680px;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+  .btn {
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--border) 0%, var(--accent) 100%);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 229, 255, 0.25);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-muted);
+  }
+
+  .about-section {
+    padding: 6rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: radial-gradient(circle at 50% 0%, rgba(112, 0, 255, 0.05) 0%, transparent 70%);
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+
+  .section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .section-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.25rem 2rem;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-icon { font-size: 2rem; margin-bottom: 1.25rem; display: inline-block; }
+
+  .card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-main); }
+
+  .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+  footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+</style>
