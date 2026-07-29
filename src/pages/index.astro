@@ -6,20 +6,22 @@
   <title>Splattanooga | Spatial Arts | Gaussian Splatting for Chattanooga</title>
   
   <!-- Flavors for the brand logo + Inter for UI/Body -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Flavors&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-dark: #0a0c10;
-      --card-bg: #12161f;
-      --card-hover: #171d29;
-      --accent: #00e5ff;
-      --accent-purple: #7000ff;
-      --text-main: #f0f4f8;
-      --text-muted: #8a99ad;
-      --border: #1e2633;
+      /* Editorial Palette: Warm Slate & High Contrast */
+	--bg-dark: #0f1115;
+	--bg-surface: #15181e;
+	--border: rgba(255, 255, 255, 0.12);
+	--border-strong: rgba(255, 255, 255, 0.25);
+	
+	--text-main: #f4f4f0;
+	--text-muted: #8a8f98;
+
+	--accent: #ff6b00; /* Architectural Amber */
     }
 
     * {
@@ -33,11 +35,11 @@
     }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      line-height: 1.6;
-      overflow-x: hidden;
+     	font-family: var(--font-body);
+		background-color: var(--bg-dark);
+		color: var(--text-main);
+		line-height: 1.6;
+		-webkit-font-smoothing: antialiased;
     }
 
     /* Logo typography using Flavors */
@@ -53,13 +55,13 @@
     }
 
     .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10, 12, 16, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 1.5rem;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: rgba(15, 17, 21, 0.9);
+		backdrop-filter: blur(16px);
+		border-bottom: 1px solid var(--border);
+		padding: 1.25rem 2rem;
     }
 
     .nav-container {
@@ -72,11 +74,12 @@
 
     nav {
       display: flex;
-      gap: 1.5rem;
+      gap: 2rem;
       align-items: center;
     }
 
     nav a {
+	  font-family: var(--font-mono);
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.95rem;
@@ -103,11 +106,11 @@
     .hero-title {
       font-family: 'Inter', sans-serif;
       font-weight: 800;
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      line-height: 1.15;
+      font-size: clamp(2.5rem, 6vw, 3rem);
+      line-height: 1.2;
       margin-bottom: 1.25rem;
       letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -123,7 +126,7 @@
       display: inline-block;
       padding: 0.35rem 1rem;
       background: rgba(0, 229, 255, 0.08);
-      border: 1px solid rgba(0, 229, 255, 0.3);
+      border: 1px solid var(--border);
       color: var(--accent);
       border-radius: 50px;
       font-size: 0.85rem;
@@ -149,7 +152,7 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+      background: linear-gradient(135deg, var(--border) 0%, var(--accent) 100%);
       color: #fff;
     }
 
@@ -219,7 +222,7 @@
       transform: translateY(-4px);
       background: var(--card-hover);
       border-color: var(--accent);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
     }
 
     .card-icon {
@@ -248,19 +251,6 @@
       color: var(--text-muted);
       font-size: 0.9rem;
     }
-
-	/* Survey Results Section */
-	nav a[href="/results"] {
-		color: var(--text-muted);
-		text-decoration: none;
-		font-size: 0.95rem;
-		font-weight: 600;
-		transition: color 0.2s ease;
-	}
-
-	nav a[href="/results"]:hover {
-		color: var(--accent);
-	}
   </style>
 </head>
 <body>
@@ -270,7 +260,7 @@
       <a href="/" class="brand-logo">splattanooga</a>
       <nav>
         <a href="#about">About</a>
-		<a href="https://docs.google.com/document/d/1-yyPhzGzEANCGawf3Xnuo8DRulZXuLspHy5z_WBzTdY/edit?usp=drive_link" 
+		<a href="https://docs.google.com/document/d/e/2PACX-1vQMXDCuW_JNd8BSX4dcvETfEPcR3Fz2oGRHp8ZmXq72x8PSdI2u78S0WWxOEfQyL0RskgGHXwRwUPC-/pub" 
 		  target="_blank" 
 		  rel="noopener noreferrer">Survey Report ↗</a>
         <a href="mailto:rob@splattanooga.com">Contact</a>
@@ -282,14 +272,14 @@
     <!-- Hero Section -->
     <section class="hero">
       <span class="badge">Community Arts Consulting</span>
-      <h1 class="hero-title">Reality Capture for the Scenic City</h1>
+      <h1 class="hero-title">Gaussian Splatting for Chattanooga</h1>
       <p class="hero-subtitle">
-        Exploring Gaussian Splatting, 3D scanning, and digital twin workflows across local arts, historical preservation, and creative pipelines in the Greater Chattanooga area.<br>
+        Exploring Gaussian Splatting, Radiance Fields, 3D scanning, and digital twin workflows across local arts, historical preservation, and creative pipelines in the Greater Chattanooga area.<br>
 		Get hands-on with in-depth training, workshops, and collaborative projects that bridge technology and creativity.
       </p>
       
       <div class="cta-group">
-        <a href="mailto:rob@splattanooga.com" class="btn btn-primary">Get Involved</a>
+        <a href="mailto:rob@splattanooga.com" class="btn btn-primary">Get in touch</a>
         <a href="#about" class="btn btn-secondary">Learn More</a>
       </div>
     </section>
@@ -298,10 +288,10 @@
     <section id="about" class="about-section">
       <div class="container">
         <div class="section-header">
-          <h2>Pioneering Spatial Technology in Chattanooga</h2>
+          <h2>Bringing Splats to Chattanooga</h2>
           <p>
-            Splattanooga bridges advanced 3D capture methods with real-world creative application, making volumetric capture accessible for local projects and digital artists.<br>
-			Our mission is to empower the community with tools, knowledge, and collaborative opportunities to explore the intersection of technology, art, and spatial storytelling.
+            Splattanooga bridges advanced 3D capture methods with real-world creative application, making volumetric capture accessible for local projects and creative professionals.<br>
+			<b>Our mission is to empower the community with tools, knowledge, and collaborative opportunities to explore the intersection of technology, art, and spatial storytelling.</b>
           </p>
         </div>
 
@@ -310,7 +300,7 @@
             <span class="card-icon">✨</span>
             <h3>Q. What?<br>A. Gaussian Splat Training</h3>
             <p>
-              Introduction courses and workshops on Gaussian Splatting, a cutting-edge technique for rendering complex 3D scenes with high efficiency and visual fidelity.<br>
+              Introductory courses and workshops on Gaussian Splatting, a cutting-edge technique for rendering complex 3D scenes with high efficiency and visual fidelity.<br>
 			  Let's talk and tailor this to your needs.
             </p>
           </div>
@@ -319,7 +309,8 @@
             <span class="card-icon">🎨</span>
             <h3>Q. Who?<br>A. Community & Arts Organizations, Artists, Creatives of all types</h3>
             <p>
-              Empowering local creative teams, galleries, museums, and digital artists with modern 3D pipelines, workshops, and empowerment to start generating and owning their spatial content.
+              Enabling local creative teams, galleries, museums, and digital artists with modern 3D pipelines, workshops, and empowerment to start generating and owning their spatial content.<br>
+			  Get in touch to learn more.
             </p>
           </div>
         </div>
