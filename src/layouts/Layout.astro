@@ -1,5 +1,9 @@
 ---
 // src/layouts/Layout.astro
+import '@fontsource/flavors';
+import '@fontsource/quicksand/400.css';
+import '@fontsource/quicksand/600.css';
+import '@fontsource/quicksand/700.css';
 ---
 <!doctype html>
 <html lang="en">
@@ -7,11 +11,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    
-    <!-- Google Fonts Preconnect & Stylesheet -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Flavors&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
   </head>
   <body>
     <slot />
@@ -19,21 +18,18 @@
 </html>
 
 <style is:global>
-  /* 1. Define the variables globally at the root */
   :root {
     --font-flavors: 'Flavors', cursive, sans-serif;
     --font-quicksand: 'Quicksand', system-ui, -apple-system, sans-serif;
   }
 
-  /* 2. Global Body Text */
   body, p, li, span, a {
     font-family: var(--font-quicksand);
     line-height: 1.6;
   }
 
-  /* 3. Global Headings & Brand Logo */
-  h1, h2, h3, .fancy-heading, .brand-logo {
+  h1, h2, h3, .fancy-heading, .brand-logo, [class*="logo"] {
     font-family: var(--font-flavors) !important;
-    font-weight: 400 !important; /* Flavors only exists in weight 400 */
+    font-weight: 400 !important;
   }
 </style>

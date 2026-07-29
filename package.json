@@ -12,6 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/flavors": "^5.3.0",
+    "@fontsource/quicksand": "^5.3.0",
     "astro": "^7.0.9"
   }
 }
