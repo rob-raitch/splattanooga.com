@@ -17,9 +17,6 @@ import Layout from '../layouts/Layout.astro';
       <a href="/" class="brand-logo">splattanooga</a>
       <nav>
         <a href="#about">About</a>
-        <a href="https://docs.google.com/document/d/e/2PACX-1vQMXDCuW_JNd8BSX4dcvETfEPcR3Fz2oGRHp8ZmXq72x8PSdI2u78S0WWxOEfQyL0RskgGHXwRwUPC-/pub" 
-          target="_blank" 
-          rel="noopener noreferrer">Survey Report ↗</a>
         <a href="mailto:rob@splattanooga.com">Contact</a>
       </nav>
     </div>
@@ -76,6 +73,12 @@ import Layout from '../layouts/Layout.astro';
   </main>
 
   <footer>
+    <div class="footer-links">
+      <a href="https://docs.google.com/document/d/e/2PACX-1vQMXDCuW_JNd8BSX4dcvETfEPcR3Fz2oGRHp8ZmXq72x8PSdI2u78S0WWxOEfQyL0RskgGHXwRwUPC-/pub" 
+         target="_blank" 
+         rel="noopener noreferrer">Survey Report ↗</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
     <p>© 2026 Splattanooga. All rights reserved.</p>
   </footer>
 </Layout>
@@ -271,5 +274,25 @@ import Layout from '../layouts/Layout.astro';
     border-top: 1px solid var(--border);
     color: var(--text-muted);
     font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
 </style>
