@@ -1,0 +1,231 @@
+---
+// src/components/SearchWidget.astro
+---
+<div class="search-widget-container" id="search-widget">
+  <div class="widget">
+    <p class="statement">
+      How do I learn more about Gaussian Splatting?<br>
+      Some example searches are provided.<br>
+      Choose your preferred search engine or enter a custom URL.
+    </p>
+
+    <div class="selector-row">
+      <select id="search-term">
+        <option value="What is Gaussian Splatting">What is Gaussian Splatting?</option>
+        <option value="Gaussian Splatting explained for beginners">Splatting explained for beginners</option>
+        <option value="3D Gaussian Splatting tutorial">3D Gaussian Splatting tutorial</option>
+        <option value="How does Gaussian Splatting work">How does it work?</option>
+        <option value="Gaussian Splatting vs photogrammetry">Splatting vs photogrammetry</option>
+        <option value="Gaussian Splatting examples">Show me some examples</option>
+      </select>
+
+      <select id="search-engine">
+        <option value="google">Google</option>
+        <option value="duckduckgo">DuckDuckGo</option>
+        <option value="startpage">Startpage</option>
+        <option value="brave">Brave Search</option>
+        <option value="ecosia">Ecosia</option>
+        <option value="bing">Bing</option>
+        <option value="lycos">Lycos</option>
+        <option value="custom">Other (enter custom URL)</option>
+      </select>
+
+      <input type="text" id="custom-search-url" placeholder="Enter search URL (use ?q= for query)">
+
+      <button class="go-btn" id="search-go-btn">GO</button>
+    </div>
+
+    <p class="note">
+      You choose where to look. I don't own the search engine.<br>
+      Your preference is remembered locally. No tracking enabled yet.
+    </p>
+  </div>
+</div>
+
+<style>
+  .search-widget-container {
+    padding: 4rem 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .widget {
+    background: var(--bg-surface);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 650px;
+    width: 100%;
+  }
+
+  .statement {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    color: var(--text-main);
+    font-weight: 600;
+  }
+
+  .selector-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  select, input[type="text"] {
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    min-width: 200px;
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: inherit;
+  }
+  
+  select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  input[type="text"] {
+    display: none; /* Hidden by default */
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  button.go-btn {
+    padding: 12px 32px;
+    font-size: 1rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  button.go-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3); /* matching the hsl(25, 100%, 50%) approx */
+  }
+
+  .note {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  /* Mobile */
+  @media (max-width: 500px) {
+    .statement { font-size: 1.4rem; }
+    .selector-row { flex-direction: column; }
+    select, input[type="text"], button.go-btn { width: 100%; }
+  }
+</style>
+
+<script>
+  const engines = {
+    google: "https://www.google.com/search?q=",
+    duckduckgo: "https://duckduckgo.com/?q=",
+    startpage: "https://www.startpage.com/sp/search?query=",
+    brave: "https://search.brave.com/search?q=",
+    ecosia: "https://www.ecosia.org/search?q=",
+    lycos: "https://lycos.com/search?kw=",
+    bing: "https://www.bing.com/search?q="
+  };
+
+  let analyticsEnabled = false;
+
+  const engineSelect = document.getElementById('search-engine');
+  const customInput = document.getElementById('custom-search-url');
+  const goBtn = document.getElementById('search-go-btn');
+
+  function handleEngineChange() {
+    if (engineSelect && customInput) {
+      if (engineSelect.value === 'custom') {
+        customInput.style.display = 'block';
+        customInput.focus();
+      } else {
+        customInput.style.display = 'none';
+      }
+    }
+  }
+
+  function launchSearch() {
+    if (!engineSelect) return;
+    
+    const engine = engineSelect.value;
+    let queryUrl = '';
+    let actualEngine = engine;
+    
+    if (engine === 'custom') {
+      const customUrl = customInput ? customInput.value.trim() : '';
+      if (!customUrl) {
+        alert('Please enter a custom search URL');
+        return;
+      }
+      queryUrl = customUrl.includes('?') ? customUrl + '&' : customUrl + '?';
+      actualEngine = 'custom';
+    } else {
+      queryUrl = engines[engine];
+    }
+    
+    const termSelect = document.getElementById('search-term');
+    const searchTerm = termSelect ? termSelect.value : "What is Gaussian Splatting";
+    
+    queryUrl += encodeURIComponent(searchTerm);
+    
+    localStorage.setItem('preferredSearchEngine', actualEngine);
+    if (termSelect) {
+      localStorage.setItem('preferredSearchTerm', termSelect.value);
+    }
+    
+    if (analyticsEnabled) {
+      navigator.sendBeacon('/api/search-event', JSON.stringify({
+        engine: actualEngine,
+        custom_url: engine === 'custom' && customInput ? customInput.value : null,
+        search_term: searchTerm,
+        timestamp: Date.now(),
+        referrer: document.referrer || null,
+        user_agent_type: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop'
+      }));
+    }
+    
+    window.open(queryUrl, '_blank');
+  }
+
+  if (engineSelect) {
+    engineSelect.addEventListener('change', handleEngineChange);
+  }
+
+  if (goBtn) {
+    goBtn.addEventListener('click', launchSearch);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedEngine = localStorage.getItem('preferredSearchEngine');
+    if (savedEngine && (engines[savedEngine] || savedEngine === 'custom') && engineSelect) {
+      engineSelect.value = savedEngine;
+      if (savedEngine === 'custom') {
+        handleEngineChange();
+      }
+    }
+    
+    const savedTerm = localStorage.getItem('preferredSearchTerm');
+    const termSelect = document.getElementById('search-term');
+    if (savedTerm && termSelect) {
+      // Check if the saved term is an option in the dropdown
+      const optionExists = Array.from(termSelect.options).some(opt => opt.value === savedTerm);
+      if (optionExists) {
+        termSelect.value = savedTerm;
+      }
+    }
+  });
+</script>

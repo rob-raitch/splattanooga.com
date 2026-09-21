@@ -1,14 +1,15 @@
 ---
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
+import SearchWidget from '../components/SearchWidget.astro';
 ---
 
 <Layout 
-  title="Splattanooga — Gaussian Splatting & Community Arts Consulting in Chattanooga"
+  title="Splattanooga | Gaussian Splatting & Community Arts Consulting in Chattanooga"
   description="Splattanooga brings Gaussian Splatting, 3D scanning, and digital twin workflows to local arts organizations, creatives, and cultural heritage projects across the Greater Chattanooga area."
 >
   <Fragment slot="head">
-    <meta property="og:title" content="Splattanooga — Gaussian Splatting for Chattanooga" />
+    <meta property="og:title" content="Splattanooga | Gaussian Splatting for Chattanooga" />
     <meta property="og:description" content="Explore community arts consulting, workshops, and 3D capture training that bridges technology, creativity, and local storytelling." />
     <meta property="og:type" content="website" />
   </Fragment>
@@ -16,11 +17,9 @@ import Layout from '../layouts/Layout.astro';
     <div class="nav-container">
       <a href="/" class="brand-logo">splattanooga</a>
       <nav>
+        <a href="#search-widget">Learn More</a>
         <a href="#about">About</a>
-        <a href="https://docs.google.com/document/d/e/2PACX-1vQMXDCuW_JNd8BSX4dcvETfEPcR3Fz2oGRHp8ZmXq72x8PSdI2u78S0WWxOEfQyL0RskgGHXwRwUPC-/pub" 
-          target="_blank" 
-          rel="noopener noreferrer">Survey Report ↗</a>
-        <a href="mailto:rob@splattanooga.com">Contact</a>
+        <a href="/contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -36,10 +35,12 @@ import Layout from '../layouts/Layout.astro';
       </p>
       
       <div class="cta-group">
-        <a href="mailto:rob@splattanooga.com" class="btn btn-primary">Get in touch</a>
-        <a href="#about" class="btn btn-secondary">Learn More</a>
+        <a href="/contact" class="btn btn-primary">Get in touch</a>
+        <a href="#search-widget" class="btn btn-secondary">Learn More</a>
       </div>
     </section>
+
+    <SearchWidget />
 
     <!-- About Section -->
     <section id="about" class="about-section">
@@ -76,6 +77,12 @@ import Layout from '../layouts/Layout.astro';
   </main>
 
   <footer>
+    <div class="footer-links">
+      <a href="https://docs.google.com/document/d/e/2PACX-1vQMXDCuW_JNd8BSX4dcvETfEPcR3Fz2oGRHp8ZmXq72x8PSdI2u78S0WWxOEfQyL0RskgGHXwRwUPC-/pub" 
+         target="_blank" 
+         rel="noopener noreferrer">Survey Report ↗</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
     <p>© 2026 Splattanooga. All rights reserved.</p>
   </footer>
 </Layout>
@@ -271,5 +278,25 @@ import Layout from '../layouts/Layout.astro';
     border-top: 1px solid var(--border);
     color: var(--text-muted);
     font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
 </style>
