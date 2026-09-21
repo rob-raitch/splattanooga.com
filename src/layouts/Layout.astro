@@ -4,6 +4,12 @@ import '@fontsource/flavors';
 import '@fontsource/quicksand/400.css';
 import '@fontsource/quicksand/600.css';
 import '@fontsource/quicksand/700.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = "Splattanooga", description = "Gaussian Splatting & Community Arts Consulting" } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -11,7 +17,10 @@ import '@fontsource/quicksand/700.css';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
- </head>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <slot name="head" />
+  </head>
   <body>
     <slot />
   </body>
