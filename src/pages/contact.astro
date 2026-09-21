@@ -130,6 +130,21 @@ import Layout from '../layouts/Layout.astro';
 
   nav a:hover, .footer-links a:hover { color: var(--accent); }
 
+  @media (max-width: 640px) {
+    .nav-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    nav {
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .navbar {
+      padding: 1rem;
+    }
+  }
+
   .page-container {
     max-width: 900px;
     margin: 0 auto;

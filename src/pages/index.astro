@@ -150,6 +150,21 @@ import SearchWidget from '../components/SearchWidget.astro';
 
   nav a:hover { color: var(--accent); }
 
+  @media (max-width: 640px) {
+    .nav-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    nav {
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .navbar {
+      padding: 1rem;
+    }
+  }
+
   .hero {
     min-height: 75vh;
     display: flex;
