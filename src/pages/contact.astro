@@ -19,6 +19,21 @@ import Layout from '../layouts/Layout.astro';
 
   <main class="page-container">
     <h1>Contact & Links</h1>
+
+    <div class="spatial-photo-wrap">
+      <spatial-photo
+        src="/rob-aitchison-headshot.spatial"
+        sensitivity="0.05"
+        snappiness="4"
+        fit="cover"
+      ></spatial-photo>
+    </div>
+
+    <div class="spatial-photo-link-wrap">
+      <a href="https://www.spatialphotos.dev/" target="_blank" rel="noopener noreferrer" class="spatial-photo-link">
+        A little depth thanks to Spatial Photos ↗
+      </a>
+    </div>
     
     <section class="blurb-section">
       <h2>Hi, I'm Rob.</h2>
@@ -67,7 +82,9 @@ import Layout from '../layouts/Layout.astro';
     </div>
     <p>© 2026 Splattanooga. All rights reserved.</p>
   </footer>
-</Layout>
+  <script type="module">
+    import 'spatial-photos';
+  </script></Layout>
 
 <style>
   :root {
@@ -150,6 +167,70 @@ import Layout from '../layouts/Layout.astro';
     margin: 0 auto;
     padding: 4rem 1.5rem;
     min-height: 70vh;
+  }
+
+  .spatial-photo-wrap {
+    max-width: 620px;
+    margin: 0 auto 1rem;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+  }
+
+  spatial-photo {
+    display: block;
+    width: 100%;
+    height: 420px;
+  }
+
+  .spatial-photo-link-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
+    max-width: 620px;
+    padding: 0.85rem 1.25rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  }
+
+  .spatial-photo-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease, transform 0.2s ease;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+  }
+
+  .spatial-photo-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0.7);
+    transform-origin: center;
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .spatial-photo-link:hover {
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .spatial-photo-link:hover::after {
+    transform: scaleX(1);
+    opacity: 1;
   }
 
   h1 {
