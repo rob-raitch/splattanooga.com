@@ -2,6 +2,41 @@
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import SearchWidget from '../components/SearchWidget.astro';
+
+const narrativePreviews = [
+  {
+    title: 'Country Garage',
+    platform: 'Voluma',
+    description: 'A comparison of different capture apps.',
+    href: 'https://voluma.ai/show/splattanooga/ford-truck/country-garage',
+    image: 'https://assets.voluma.ai/splattanooga/ford-truck/.thumbs/4369_1790690608313_thumb.webp',
+    imageAlt: 'Country Garage Gaussian Splat preview',
+  },
+  {
+    title: 'ASL + FUN where Paula stands',
+    platform: 'Splatware',
+    description: 'An interactive virtual tour of a Northshore splat.',
+    href: 'https://splatware.com/tour/fb0c678c-ebea-42c7-b602-c00c0ace2556',
+    image: 'https://firebasestorage.googleapis.com/v0/b/virtual-spatial-tour-b3261.appspot.com/o/thumbnails%2Ffb0c678c-ebea-42c7-b602-c00c0ace2556%2Fwaypoint-1.jpg?alt=media',
+    imageAlt: 'ASL plus FUN virtual tour preview',
+  },
+  {
+    title: 'Map based storytelling with splats',
+    platform: 'Cesium Ion',
+    description: 'A way to register your splats with real world location data.',
+    href: 'https://ion.cesium.com/stories/viewer/?id=eb4bc5f6-74f2-46e1-9cb9-26a85eee9d32',
+    image: '/images/cesium-ion-story.webp',
+    imageAlt: 'Cesium Ion story view of a 3D scene in Chattanooga',
+  },
+  {
+    title: 'Sculpture Fields Visit',
+    platform: 'Real Horizons',
+    description: 'Showcasing how to capture a splat at Sculpture Fields.',
+    href: 'https://studio.realhorizons.ai/tours/e8c99da4-4908-4445-bc2f-4c1ce0d1ddef/view',
+    image: '/images/real-horizons-sculpture-fields.webp',
+    imageAlt: '"Angel" sculpture at Sculpture Fields in a 3D scene',
+  },
+];
 ---
 
 <Layout 
@@ -25,9 +60,60 @@ import SearchWidget from '../components/SearchWidget.astro';
   </header>
 
   <main>
+    <section class="welcome-terminal" aria-label="Welcome message">
+      <div class="terminal-bar">
+        <div class="terminal-dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="terminal-label">SPLATTANOOGA://WELCOME</span>
+        <button class="terminal-replay" type="button">↻ Replay</button>
+      </div>
+      <p class="welcome-intro">
+        <span class="visually-hidden">Welcome to the website, we are glad you are here! Please take a look around and get in touch to carry on the conversation, thank you!!</span>
+        <span class="typing-text" aria-hidden="true">Welcome to the website, we are glad you are here! Please take a look around and get in touch to carry on the conversation, thank you!!</span>
+      </p>
+    </section>
+    <section class="narrative-previews" aria-labelledby="narrative-previews-title">
+      <h2 id="narrative-previews-title">
+        We are experimenting with different narrative creation <em>"splatforms"</em><br>
+      </h2>
+      <h3>Please explore some of our recent narrative experiments below. Each platform offers unique features and experiences, showcasing the versatility of Gaussian Splatting and 3D capture techniques in storytelling.<br>
+        *Desktop and mobile browsers are supported, however, your experience mileage may vary depending on your device and browser capabilities. We are keen to hear your feedback and suggestions for future narrative experiments.
+      </h3>
+      <br><br>
+      <div class="preview-grid">
+        {narrativePreviews.map((preview) => (
+          <a
+            class="preview-card"
+            href={preview.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${preview.title} on ${preview.platform} (opens in a new tab)`}
+          >
+            <div class:list={['preview-media', { 'preview-media--image': preview.image }]}>
+              {preview.image ? (
+                <img src={preview.image} alt={preview.imageAlt} loading="lazy" />
+              ) : (
+                <span class="preview-placeholder" aria-hidden="true">StorySplat</span>
+              )}
+              <span class="preview-open">Open in new tab ↗</span>
+            </div>
+            <div class="preview-details">
+              <div>
+                <p class="preview-platform">{preview.platform}</p>
+                <h3>{preview.title}</h3>
+                <p class="preview-description">{preview.description}</p>
+              </div>
+              <span class="preview-arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
     <!-- Hero Section -->
     <section class="hero">
-      <span class="badge">Community Arts Consulting</span>
+      <span class="badge">Community Arts | Reality Capture | Consulting</span>
       <h2 class="hero-title">Gaussian Splatting for Chattanooga</h2>
       <p class="hero-subtitle">
         Exploring Gaussian Splatting, Radiance Fields, 3D scanning, and digital twin workflows across local arts, historical preservation, and creative pipelines in the Greater Chattanooga area.<br>
@@ -86,6 +172,45 @@ import SearchWidget from '../components/SearchWidget.astro';
     <p>© 2026 Splattanooga. All rights reserved.</p>
   </footer>
 </Layout>
+
+<script>
+  const terminal = document.querySelector<HTMLElement>('.welcome-terminal');
+  const typingText = terminal?.querySelector<HTMLElement>('.typing-text');
+  const replayButton = terminal?.querySelector<HTMLButtonElement>('.terminal-replay');
+  const welcomeMessage = typingText?.textContent ?? '';
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let typingTimer: number | undefined;
+
+  const playWelcomeMessage = () => {
+    if (!typingText) return;
+
+    window.clearInterval(typingTimer);
+    typingText.classList.remove('typing-complete');
+
+    if (reducedMotion) {
+      typingText.textContent = welcomeMessage;
+      typingText.classList.add('typing-complete');
+      return;
+    }
+
+    const characters = Array.from(welcomeMessage);
+    typingText.textContent = '';
+    let index = 0;
+    typingTimer = window.setInterval(() => {
+      typingText.textContent += characters[index++];
+
+      if (index === characters.length) {
+        window.clearInterval(typingTimer);
+        typingText.classList.add('typing-complete');
+      }
+    }, 70);
+  };
+
+  if (typingText) {
+    playWelcomeMessage();
+    replayButton?.addEventListener('click', playWelcomeMessage);
+  }
+</script>
 
 <style>
   /* All your page CSS remains here, but remove hardcoded font overrides */
@@ -174,6 +299,242 @@ import SearchWidget from '../components/SearchWidget.astro';
     text-align: center;
     padding: 4rem 1.5rem 2rem;
     position: relative;
+  }
+
+  .welcome-intro {
+    margin: 0;
+    padding: 1.5rem clamp(1.25rem, 4vw, 3rem) 2rem;
+    color: #d7f7e1;
+    font-family: var(--font-mono), monospace;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    line-height: 1.8;
+    text-align: left;
+  }
+
+  .welcome-terminal {
+    max-width: 900px;
+    margin: 2rem auto 0;
+    overflow: hidden;
+    border: 1px solid rgba(112, 220, 150, 0.3);
+    border-radius: 12px;
+    background: #101713;
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.35), 0 0 30px rgba(112, 220, 150, 0.06);
+  }
+
+  .terminal-bar {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(112, 220, 150, 0.18);
+    background: #19221c;
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .terminal-dots span {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: #f27b72;
+  }
+
+  .terminal-dots span:nth-child(2) { background: #e8c66a; }
+  .terminal-dots span:nth-child(3) { background: #77cc86; }
+
+  .terminal-label {
+    color: #91a995;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  .terminal-replay {
+    border: 1px solid rgba(145, 169, 149, 0.35);
+    border-radius: 5px;
+    padding: 0.3rem 0.6rem;
+    background: transparent;
+    color: #d7f7e1;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.8rem;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .terminal-replay:hover,
+  .terminal-replay:focus-visible {
+    border-color: #77cc86;
+    background: rgba(119, 204, 134, 0.12);
+  }
+
+  .terminal-replay:focus-visible {
+    outline: 2px solid #77cc86;
+    outline-offset: 3px;
+  }
+
+  .typing-text {
+    border-right: 2px solid #77cc86;
+    animation: typing-cursor 0.8s steps(2, start) infinite;
+  }
+
+  .typing-text.typing-complete {
+    border-right: 0;
+    animation: none;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @keyframes typing-cursor {
+    to { border-color: transparent; }
+  }
+
+  @media (max-width: 640px) {
+    .welcome-terminal {
+      margin: 1.5rem 1rem 0;
+    }
+
+    .terminal-label {
+      font-size: 0.6rem;
+    }
+  }
+
+  .narrative-previews {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .narrative-previews h2 {
+    max-width: 760px;
+    margin: 0 auto 1.75rem;
+    text-align: center;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    line-height: 1.35;
+  }
+
+  .narrative-previews > h3 {
+    max-width: 760px;
+    margin: 0 auto 1.75rem;
+    text-align: center;
+    font-size: clamp(0.85rem, 3vw, 0.85rem);
+    line-height: 1.35;
+  }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .preview-card {
+    overflow: hidden;
+    color: var(--text-main);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-surface);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .preview-card:hover,
+  .preview-card:focus-visible {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .preview-media {
+    position: relative;
+    display: grid;
+    min-height: 190px;
+    place-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255, 142, 43, 0.24), transparent 38%),
+      linear-gradient(135deg, #252b35, #12151b);
+  }
+
+  .preview-media--image img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+  }
+
+  .preview-placeholder {
+    color: var(--text-main);
+    font-family: var(--font-flavors);
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .preview-open {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    background: rgba(15, 17, 21, 0.82);
+    color: var(--text-main);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .preview-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.1rem 1.15rem;
+  }
+
+  .preview-platform {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .preview-details h3 {
+    margin: 0.15rem 0 0.25rem;
+    font-size: 1.15rem;
+  }
+
+  .preview-description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .preview-arrow {
+    color: var(--accent);
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .preview-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .preview-media,
+    .preview-media--image img {
+      min-height: 170px;
+      height: 170px;
+    }
   }
 
   .hero-title {
