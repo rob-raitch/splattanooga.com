@@ -144,9 +144,16 @@ const narrativePreviews = [
             <span class="card-icon">✨</span>
             <h3>Q. What?<br>A. Gaussian Splat Training</h3>
             <p>
-              Introductory courses and workshops on Gaussian Splatting, a cutting-edge technique for rendering complex 3D scenes with high efficiency and visual fidelity.<br>
-              Let's talk and tailor this to your needs.
+              Introductory courses and workshops on Gaussian Splatting, from capture considerations through delivery possibilities.<br>
             </p>
+            <div class="about-answer">
+              <h3>Q. What else?<br>A. Spatial Media processing</h3>
+              <p>Explore possibilities for processing and utilizing your existing media in various creative and professional contexts.</p>
+            </div>
+            <div class="about-answer">
+              <h3>Q. Why now?<br>A. Be ready for the spatial revolution</h3>
+              <p>The spatial web is here. 3D Gaussian Splatting turns real environments into photorealistic, interactive 3D worlds in minutes; no heavy apps, mesh cleanup, or long render times. Build for spatial browsers now and capture attention before photorealism becomes the bare minimum.</p>
+            </div>
           </div>
 
           <div class="card">
@@ -631,15 +638,8 @@ const narrativePreviews = [
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 2.25rem 2rem;
-    transition: all 0.25s ease;
     display: flex;
     flex-direction: column;
-  }
-
-  .card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   }
 
   .card-icon { font-size: 2rem; margin-bottom: 1.25rem; display: inline-block; }
@@ -647,6 +647,8 @@ const narrativePreviews = [
   .card h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-main); }
 
   .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+  .about-answer { margin-top: 1.5rem; }
 
   footer {
     text-align: center;
